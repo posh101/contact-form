@@ -8,22 +8,20 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get("/contact-form", (req, res) => {
     res.sendFile(__dirname, 'index.php')
 })
 
 app.post("/contact-form", (req, res) => {
-    console.log(req.body)
-
     const transporter = nodemailer.createTransport({
         service: 'gmail',
-        host: 'smtp.gmail.com',
+        host: 'gsmtp.gmail.com',
         port: 587,
         secure: true,
         requireTLS: true,
         logger: true,
         auth: {
-            user: "Nodemailer",
+            user: "paulorife@gmail.com",
             pass: "wdaojrfukgddejpc"
         }
     })
@@ -32,8 +30,8 @@ app.post("/contact-form", (req, res) => {
         from: req.body.email,
         to: "paulorife@gmail.com",
         subject: `Message from ${req.body.name}`,
-        text: req.body.message,
-        html:' <p> html code </p>'
+        text: req.body.message
+       
     }
 
     transporter.sendMail(mailOptions, (error, info) => {
